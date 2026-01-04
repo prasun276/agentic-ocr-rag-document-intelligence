@@ -2,11 +2,13 @@ FROM python:3.11-slim
 
 WORKDIR /app
 
-# Install system dependencies
+# Install system dependencies (OCR + OpenGL runtime)
 RUN apt-get update && apt-get install -y \
     tesseract-ocr \
     poppler-utils \
     libpoppler-cpp-dev \
+    libgl1 \
+    libglib2.0-0 \
     build-essential \
     curl \
     git \

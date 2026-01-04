@@ -36,7 +36,7 @@ The system uses a LangGraph-based agentic workflow:
 
 ### System Dependencies
 
-For Hugging Face Spaces, Tesseract OCR is pre-installed. For local deployment:
+For Hugging Face Spaces, the Dockerfile automatically installs tesseract-ocr and poppler-utils. For local deployment:
 
 **Ubuntu/Debian:**
 ```bash
@@ -63,11 +63,11 @@ All Python dependencies are listed in `requirements.txt` and will be automatical
 ### For Hugging Face Spaces
 
 1. **Fork this repository** to your Hugging Face account
-2. **Create a new Space** and select "Streamlit" as the SDK
+2. **Create a new Space** and select "Docker" as the SDK
 3. **Add your OpenAI API key** as a secret:
    - Go to Settings → Secrets
    - Add a new secret: `OPENAI_API_KEY` with your API key value
-4. The Space will automatically build and deploy!
+4. The Space will automatically build and deploy using the Dockerfile!
 
 ### For Local Development
 
@@ -112,6 +112,7 @@ All Python dependencies are listed in `requirements.txt` and will be automatical
 ```
 .
 ├── app.py                 # Main Streamlit application
+├── Dockerfile             # Docker configuration for HF Spaces
 ├── agents/                # Agent implementations
 │   ├── ocr_agent.py
 │   ├── confidence_agent.py

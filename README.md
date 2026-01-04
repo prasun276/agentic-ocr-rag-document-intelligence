@@ -71,6 +71,32 @@ All Python dependencies are listed in `requirements.txt` and will be automatical
 
 ### For Local Development
 
+#### Option 1: Using Docker (Recommended - matches HF Spaces environment)
+
+1. **Clone the repository:**
+   ```bash
+   git clone <repository-url>
+   cd "Agentic OCR-RAG Document Intelligence System"
+   ```
+
+2. **Build the Docker image:**
+   ```bash
+   docker build -t agentic-ocr-rag .
+   ```
+
+3. **Run the container:**
+   ```bash
+   docker run -p 8501:7860 \
+     -e OPENAI_API_KEY=your_api_key_here \
+     agentic-ocr-rag
+   ```
+> Note: The container runs on port 7860 internally (HF requirement) and is mapped to port 8501 locally.
+
+4. **Access the app:**
+   Open http://localhost:8501 in your browser
+
+#### Option 2: Direct Python Installation
+
 1. **Clone the repository:**
    ```bash
    git clone <repository-url>
@@ -142,7 +168,7 @@ All Python dependencies are listed in `requirements.txt` and will be automatical
 - **OpenAI**: Embeddings and Q&A
 - **Tesseract OCR**: Text extraction
 - **FAISS**: Vector similarity search
-- **Pillow & OpenCV**: Image processing
+- **Pillow (and optional OpenCV for preprocessing)**: Image processing
 
 ## 📝 License
 

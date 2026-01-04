@@ -1,7 +1,8 @@
 from PIL import Image
 import pytesseract
+from config.settings import TESSERACT_PATH
 
-pytesseract.pytesseract.tesseract_cmd = r"C:\Program Files\Tesseract-OCR\tesseract.exe"
+pytesseract.pytesseract.tesseract_cmd = TESSERACT_PATH
 
 def extract_text(image_path:str) -> str:
     """

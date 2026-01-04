@@ -1,8 +1,9 @@
 from pdf2image import convert_from_path
 import pytesseract
 from PIL import Image
+from config.settings import TESSERACT_PATH
 
-pytesseract.pytesseract.tesseract_cmd = r"C:\Program Files\Tesseract-OCR\tesseract.exe"
+pytesseract.pytesseract.tesseract_cmd = TESSERACT_PATH
 
 def extract_text_from_pdf(pdf_path: str):
     pages = convert_from_path(pdf_path)

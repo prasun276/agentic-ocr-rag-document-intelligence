@@ -1,28 +1,37 @@
-import fitz  # PyMuPDF
+from pdf2image import convert_from_path
 import pytesseract
 from PIL import Image
 from config.settings import TESSERACT_PATH
-import io
+import os
 
 pytesseract.pytesseract.tesseract_cmd = TESSERACT_PATH
 
 def extract_text_from_pdf(pdf_path: str):
-    doc = fitz.open(pdf_path)
+    try:
+        # Try to use poppler if available
+        pages = convert_from_path(
+        pdf_path,
+        first_page=1,
+        last_page=5  # HF-safe default
+        )
 
+    except Exception as e:
+        # If poppler is not available, raise a clear error
+        raise RuntimeError(
+            f"PDF processing requires poppler-utils. "
+            f"Install it with: sudo apt-get install poppler-utils (Linux) or brew install poppler (macOS). "
+            f"Original error: {str(e)}"
+        )
+    
     all_text = []
 
-    # HF-safe page limit
-    max_pages = min(len(doc), 5)
-
-    for page_num in range(max_pages):
-        page = doc.load_page(page_num)
-
-        # Render page to image
-        pix = page.get_pixmap(dpi=200)
-        img_bytes = pix.tobytes("png")
-        image = Image.open(io.BytesIO(img_bytes))
-
-        text = pytesseract.image_to_string(image, lang="eng")
-        all_text.append(f"\n--- Page {page_num + 1} ---\n{text}")
+    for i, page in enumerate(pages):
+        text = pytesseract.image_to_string(page, lang="eng")
+        all_text.append(f"\n--- Page {i+1} ---\n{text}")
 
     return "\n".join(all_text)
+
+
+if __name__ == "__main__":
+    text = extract_text_from_pdf("sample_invoice.pdf")
+    print(text)

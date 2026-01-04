@@ -2,7 +2,7 @@ FROM python:3.11-slim
 
 WORKDIR /app
 
-# Install system dependencies: tesseract-ocr and poppler-utils
+# Install system dependencies
 RUN apt-get update && apt-get install -y \
     tesseract-ocr \
     poppler-utils \
@@ -12,20 +12,24 @@ RUN apt-get update && apt-get install -y \
     git \
     && rm -rf /var/lib/apt/lists/*
 
-# Copy requirements first for better Docker layer caching
-COPY requirements.txt ./
+# Copy requirements first (cache optimization)
+COPY requirements.txt .
 
-# Install Python dependencies
-RUN pip3 install --no-cache-dir -r requirements.txt
+RUN pip install --no-cache-dir -r requirements.txt
 
-# Copy all application code
+# Copy app code
 COPY . .
 
-# Expose Streamlit port
-EXPOSE 8501
+# HF uses port 7860
+EXPOSE 7860
 
-# Health check
-HEALTHCHECK CMD curl --fail http://localhost:8501/_stcore/health || exit 1
+# HF-compatible healthcheck
+HEALTHCHECK CMD curl --fail http://localhost:7860/_stcore/health || exit 1
 
-# Run Streamlit app
-ENTRYPOINT ["streamlit", "run", "app.py", "--server.port=8501", "--server.address=0.0.0.0"]
+# Run Streamlit in headless mode on HF port
+CMD streamlit run app.py \
+    --server.port=7860 \
+    --server.address=0.0.0.0 \
+    --server.headless=true \
+    --browser.serverAddress=0.0.0.0 \
+    --browser.gatherUsageStats=false

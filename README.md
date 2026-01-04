@@ -158,3 +158,10 @@ Contributions are welcome! Please feel free to submit a Pull Request.
 - Processing time depends on document size and complexity
 - Large PDFs may take longer to process
 - The system automatically cleans up uploaded files after processing
+
+### Deployment Notes
+
+This project is deployed using Hugging Face Docker Spaces to support
+full OCR capabilities (Tesseract + Poppler). While lightweight OCR
+alternatives exist, Docker was chosen to retain higher OCR accuracy
+and production parity.

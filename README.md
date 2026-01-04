@@ -159,4 +159,3 @@ Contributions are welcome! Please feel free to submit a Pull Request.
 - Processing time depends on document size and complexity
 - Large PDFs may take longer to process
 - The system automatically cleans up uploaded files after processing
-

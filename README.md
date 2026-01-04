@@ -1,14 +1,14 @@
 ---
-title: Streamlit Template Space
+title: Agentic Ocr Rag
 emoji: 🚀
 colorFrom: red
 colorTo: red
 sdk: docker
 app_port: 8501
 tags:
-  - streamlit
+- streamlit
 pinned: false
-short_description: Streamlit template space
+short_description: END to END agentic ocr rag based agent
 ---
 
 # Welcome to Streamlit!

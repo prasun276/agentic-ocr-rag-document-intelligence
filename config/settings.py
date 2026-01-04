@@ -3,12 +3,12 @@ import platform
 
 # Tesseract path configuration for different platforms
 if platform.system() == "Windows":
-    TESSERACT_PATH = r"C:\Program Files\Tesseract-OCR\tesseract.exe"
+    # Windows: use default installation path or environment variable
+    TESSERACT_PATH = os.getenv("TESSERACT_PATH", r"C:\Program Files\Tesseract-OCR\tesseract.exe")
 else:
-    # Linux/Unix - use system tesseract
-    TESSERACT_PATH = "/usr/bin/tesseract"  # Default Linux path
+    # Linux/Unix (including Hugging Face Spaces): tesseract is in PATH
+    # Use "tesseract" to let the system find it via PATH, or use custom path from env
+    TESSERACT_PATH = os.getenv("TESSERACT_PATH", "tesseract")
 
-# Allow override via environment variable
-TESSERACT_PATH = os.getenv("TESSERACT_PATH", TESSERACT_PATH)
 
 OCR_CONFIDENCE_THRESHOLD = 60

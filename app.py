@@ -5,7 +5,9 @@ from pathlib import Path
 
 # Load environment variables
 from dotenv import load_dotenv
-load_dotenv()
+if os.path.exists(".env"):
+    load_dotenv()
+
 
 try:
     from graph.document_graph import build_graph
@@ -103,4 +105,3 @@ if st.button("Ask") and uploaded_file:
                     file_path.unlink()
             except:
                 pass
-

@@ -8,6 +8,10 @@ from dotenv import load_dotenv
 if os.path.exists(".env"):
     load_dotenv()
 
+import os
+os.environ["STREAMLIT_SERVER_ENABLE_CORS"] = "false"
+os.environ["STREAMLIT_SERVER_ENABLE_XSRF_PROTECTION"] = "false"
+
 
 try:
     from graph.document_graph import build_graph
